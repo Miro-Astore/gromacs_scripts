@@ -1,8 +1,12 @@
 #echo q | gmx make_ndx -f ionized.gro
 #for i in $(echo " MG POPC ATP");
-
-PROTEINPDBFILE="10_added_autopsf.pdb"
-PROTEINPSFFILE="10_added_autopsf.psf"
+#first step is getting the protein restr files
+export temp_vmdopt=$VMDNOOPTIX
+export temp_vmdcuda=$VMDNOCUDA 
+export VMDNOCUDA=1
+export VMDNOOPTIX=1
+PROTEINPDBFILE="ionized.pdb"
+PROTEINPSFFILE="ionized.psf"
 cat read_chain_reses.tcl | sed "s/PDBFILE/$PROTEINPDBFILE/g" | sed "s/PSFFILE/$PROTEINPSFFILE/g" > /tmp/read_chain_reses.tcl
 vmd -dispdev text -e  /tmp/read_chain_reses.tcl 
 for i in $(cat /tmp/chain_residues.txt );
@@ -15,13 +19,45 @@ do
 	chain_n=$(cat /tmp/out.ndx | grep "^\[" | wc -l)
 	chain_n=$(( $chain_n - 1 ))
 	echo $chain_n | gmx editconf -f ionized.tpr -o /tmp/building_gro$chain.pdb -n /tmp/out.ndx -conect
-	#echo $chain_n | gmx editconf -f ionized.tpr -o /tmp/building_gro$chain.gro -n /tmp/out.ndx 
+
 	fc=4184
-	for i in $(seq 1 ); do 
+	for i in $(seq 1 15 ); do 
 		echo 2 | gmx genrestr -f /tmp/building_gro$chain.pdb -o relax$chain\_$i.itp -fc $fc
+
 		fc=$(echo "scale=1;$fc / 2 " | bc -l )
 	done 
 	rm /tmp/out.ndx 
 	#rm /tmp/building_gro$chain.pdb
 done 
 
+vmd -dispdev text -e write_popc.tcl  
+echo -e "0 & ! a H*\nq" | gmx make_ndx -f POPC.pdb  -o /tmp/out.ndx 
+chain_n=$(cat /tmp/out.ndx | grep "^\[" | wc -l)
+chain_n=$(( $chain_n - 1 ))
+
+for i in $(seq 1  15 ); do 
+
+	echo -e "$chain_n\nq" | gmx genrestr -f POPC.pdb -n /tmp/out.ndx -o relaxL_$i.itp -fc $fc
+done
+rm /tmp/out.ndx
+vmd -dispdev text -e write_ATP.tcl  
+echo -e "0 & ! a H*\nq" | gmx make_ndx -f ATP.pdb  -o /tmp/out.ndx 
+chain_n=$(cat /tmp/out.ndx | grep "^\[" | wc -l)
+chain_n=$(( $chain_n - 1 ))
+
+for i in $(seq 1  15 ); do 
+
+	echo -e "$chain_n\nq" | gmx genrestr -f ATP.pdb -n /tmp/out.ndx -o relaxR2_$i.itp -fc $fc
+done
+rm /tmp/out.rndx
+
+vmd -dispdev text -e write_MG.tcl  
+echo -e "0 & ! a H*\nq" | gmx make_ndx -f MG.pdb  -o /tmp/out.ndx 
+chain_n=$(cat /tmp/out.ndx | grep "^\[" | wc -l)
+chain_n=$(( $chain_n - 1 ))
+
+for i in $(seq 1  15 ); do 
+	echo -e "$chain_n\nq" | gmx genrestr -f MG.pdb -n /tmp/out.ndx -o relaxR_$i.itp -fc $fc
+done
+export VMDNOCUDA=$temp_vmdocuda
+export VMDNOOPTIX=$temp_vmdopt
