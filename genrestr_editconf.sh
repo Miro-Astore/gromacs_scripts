@@ -1,6 +1,7 @@
-#echo q | gmx make_ndx -f ionized.gro
-#for i in $(echo " MG POPC ATP");
 #first step is getting the protein restr files
+
+gmx grompp -f ions.mdp -c converted.gro -p topol.top -o ionized.tpr -maxwarn 1
+
 export temp_vmdopt=$VMDNOOPTIX
 export temp_vmdcuda=$VMDNOCUDA 
 export VMDNOCUDA=1
