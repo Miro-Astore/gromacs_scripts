@@ -1,5 +1,5 @@
-mol new ionized.psf
-mol addfile ionized.pdb
+mol new PSFFILE
+mol addfile PDBFILE
 set sel [atomselect top "resname MG"]
 $sel writepdb MG.pdb
 exit 

@@ -1,3 +1,4 @@
+#not really that useful
 x=0
 for i in $(ls topol*itp); 
 do
