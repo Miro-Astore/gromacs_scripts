@@ -5,6 +5,8 @@
 #make sure the pdb files contain the whole system. they don't need the right termini but they need all elements proteins ligands and lipids
 #TODO make this script more modular. sure make a seperate one for proteins but you don't need to do the same thing for each ligand /lipid
 
+mkdir -p ../topol_backups
+cp -n ../$i ../topol_backups/$i
 mkdir -p ../relax
 cp ../relax/* ../
 gmx grompp -f ions.mdp -c $1 -p $2 -o ionized.tpr -maxwarn 1
@@ -83,8 +85,6 @@ for i in $(ls .. | grep topol | grep itp);
 do 
 
 	#getting chain number/identity
-	mkdir -p ../topol_backups
-	cp -n ../$i ../topol_backups/$i
 	chain_id=$(echo $i | grep -o "chain_.*.itp" | sed "s^chain\_^^g" | sed "s^\.itp^^g")
 	for j in $(seq 1 15); 
 	do
