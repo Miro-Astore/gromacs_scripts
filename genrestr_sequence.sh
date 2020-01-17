@@ -6,6 +6,7 @@
 #TODO make this script more modular. sure make a seperate one for proteins but you don't need to do the same thing for each ligand /lipid
 
 mkdir -p ../relax
+cp ../relax/* ../
 gmx grompp -f ions.mdp -c $1 -p $2 -o ionized.tpr -maxwarn 1
 
 export temp_vmdopt=$VMDNOOPTIX
