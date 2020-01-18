@@ -1,4 +1,4 @@
-eefine                  = -DREST_ON -DRELAXA_1 -DRELAXB_1 -DRELAXL_1 -DRELAXR_1 -DRELAXR2_1
+define                  = -DREST_ON -DRELAXA_1 -DRELAXB_1 -DRELAXR_1 -DRELAXR2_1
 integrator              = md
 dt                      = 0.001
 nsteps                  = 25000

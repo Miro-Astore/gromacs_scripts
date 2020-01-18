@@ -1,4 +1,4 @@
-define                  = -DREST_ON -DRELAXA_2 -DRELAXB_2 -DRELAXL_2 -DRELAXR_2 -DRELAXR2_2
+define                  = -DREST_ON -DRELAXA_2 -DRELAXB_2 -DRELAXR_2 -DRELAXR2_2
 integrator              = md
 dt                      = 0.001
 nsteps                  = 25000
