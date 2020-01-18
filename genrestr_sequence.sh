@@ -4,7 +4,9 @@
 #################
 #make sure the pdb files contain the whole system. they don't need the right termini but they need all elements proteins ligands and lipids
 #note weird sed delimiters is because it won't distinguish /'s from directories properly so we use ^ instead 
+
 #TODO make this script more modular. sure make a seperate one for proteins but you don't need to do the same thing for each ligand /lipid
+#TODO make script insensetive to pdb or gro residue numbering can use gmx editconf -resnr option to renumber residues in the writing pdb step
 temp_gmx_back=$GMX_MAXBACKUP
 export GMX_MAXBACKUP=-1
 mkdir -p ../topol_backups
