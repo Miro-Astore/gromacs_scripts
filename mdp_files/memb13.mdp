@@ -1,7 +1,7 @@
-define                  = -DREST_ON -DRELAXA_13 -DRELAXB_13 -DRELAXR_13 -DRELAXR2_13
+define                  = -DRELAXA_13 -DRELAXB_13 -DRELAXR_13 -DRELAXR2_13
 integrator              = md
-dt                      = 0.002
-nsteps                  = 50000
+dt                      = 0.001
+nsteps                  = 200000
 nstlog                  = 5000
 nstxout                 = 5000
 nstvout                 = 5000

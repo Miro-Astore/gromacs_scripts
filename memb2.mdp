@@ -1,7 +1,7 @@
-define                  = -DRELAXA_6 -DRELAXB_6 -DRELAXR_6 -DRELAXR2_6
+define                  = -DRELAXA_2 -DRELAXB_2 -DRELAXR_2 -DRELAXR2_2
 integrator              = md
 dt                      = 0.001
-nsteps                  = 200000
+nsteps                  = 25000
 nstlog                  = 5000
 nstxout                 = 5000
 nstvout                 = 5000
@@ -23,12 +23,6 @@ tcoupl                  = berendsen
 tc_grps                 = Protein   POPC   MG_ATP        SOL
 tau_t                   = 1.0    1.0    1.0           1.0
 ref_t                   = 350.00   350.00   350.00    350.00
-;
-pcoupl                  = berendsen
-pcoupltype              = semiisotropic 
-tau_p                   = 5.0
-compressibility         = 4.5e-5  4.5e-5
-ref_p                   = 1.0     1.0
 ;
 constraints             = h-bonds
 constraint_algorithm    = LINCS

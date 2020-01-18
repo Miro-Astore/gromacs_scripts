@@ -1,7 +1,7 @@
-define                  = -DRELAXA_6 -DRELAXB_6 -DRELAXR_6 -DRELAXR2_6
+define                  = -DRELAXA_3 -DRELAXB_3 -DRELAXR_3 -DRELAXR2_3
 integrator              = md
 dt                      = 0.001
-nsteps                  = 200000
+nsteps                  = 25000
 nstlog                  = 5000
 nstxout                 = 5000
 nstvout                 = 5000
@@ -36,6 +36,6 @@ continuation            = yes
 ;
 nstcomm                 = 100
 comm_mode               = linear
-comm_grps               = System   
+comm_grps               = System
 ;
 refcoord_scaling        = com
