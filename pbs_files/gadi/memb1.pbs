@@ -1,0 +1,24 @@
+#!/bin/bash
+#PBS -P r16
+#PBS -q gpuvolta
+#PBS -l ngpus=4
+#PBS -l ncpus=36
+#PBS -l storage=scratch/r16
+#PBS -m abe
+#PBS -l walltime=48:00:00
+#PBS -l mem=8GB
+#PBS -l wd
+#PBS -M yearlyboozefest@gmail.com
+
+module load gromacs/2019.3-gpuvolta
+
+#gmx mdrun -v -ntmpi 1 -ntomp $NCPUS -deffnm memb0 -nb gpu -tunepme yes  2>&1 | tee  memb0.log
+export OMP_NUM_THREADS=$PBS_NCPUS
+gmx grompp -f memb$i\.mdp -o memb$i\.tpr -c memb$i\.gro -n index.ndx -p topol.top 2>&1 | tee memb$i\_setup.log 
+gmx mdrun -v -ntmpi 1 -ntomp $PBS_NCPUS -deffnm memb$i
+
+last_err=$?
+echo $last_err
+
+source $HOME/.bashrc
+if [  $last_err = 0 ] ; then nsub memb2.pbs ; fi
