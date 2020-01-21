@@ -15,7 +15,7 @@ cp -n ../topol*itp ../topol_backups/
 #revert to original topology files
 cp ../topol_backups/* ../
 mkdir -p ../relax
-cp ../relax/* ../
+#cp ../relax/* ../
 gmx grompp -f ions.mdp -c $1 -p $2 -o ionized.tpr -maxwarn 1
 
 export temp_vmdopt=$VMDNOOPTIX
@@ -87,7 +87,7 @@ chain_n=$(( $chain_n - 1 ))
 fc=4184
 for i in $(seq 1  15 ); 
 do 
-	echo -e "$chain_n\nq" | gmx genrestr -f MG.pdb -n /tmp/out.ndx -o ../relax/relaxR_$i.itp -fc $fc
+	echo -e "$chain_n\nq" | gmx genrestr -f /tmp/MG.pdb -n /tmp/out.ndx -o ../relax/relaxR_$i.itp -fc $fc
 	fc=$(echo "scale=1;$fc / 2 " | bc -l )
 done
 export VMDNOCUDA=$temp_vmdocuda
