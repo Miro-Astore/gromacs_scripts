@@ -19,7 +19,7 @@ rvdw_switch             = 1.0
 rvdw                    = 1.2
 ;
 tcoupl                  = Nose-Hoover
-tc_grps                 = Protein   POPC   MG_ATP        POT_CLA_SOL
+tc_grps                 = Protein   POPC   MG_ATP        SOLVENT
 tau_t                   = 1.0    1.0    1.0           1.0
 ref_t                   = 350.00   350.00   350.00    350.00
 ;
