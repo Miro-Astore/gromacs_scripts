@@ -7,6 +7,7 @@
 
 #TODO make this script more modular. sure make a seperate one for proteins but you don't need to do the same thing for each ligand /lipid
 #TODO make script insensetive to pdb or gro residue numbering can use gmx editconf -resnr option to renumber residues in the writing pdb step
+
 temp_gmx_back=$GMX_MAXBACKUP
 export GMX_MAXBACKUP=-1
 mkdir -p ../topol_backups
@@ -102,7 +103,7 @@ do
 	for j in $(seq 1 15); 
 	do
 		echo -e "#ifdef RELAX${chain_id}_${j}
-#include \"relax${chain_id}_${j}.itp\"
+#include \"relax/relax${chain_id}_${j}.itp\"
 #endif" >> ../$i
 
 	done
