@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
-#NB
-#NB
-#NB
 #NB THIS SCRIPT SHOULD NOT BE USED IN ACTUAL MD SIMULATIONS BUT FOR VISUALISATION PURPOSES ONLY, IT WILL NOT REPRODUCE ANGLES AND DIHEDRALS
+#NB
+#NB
+#NB 
 #NB
 # Adapted from Graham Smith's script gmx2mmc
 # modified by Marc Baaden (080901)
@@ -277,6 +277,6 @@ format LINE_PSF_3 =
 0 !NIMPHI: impropers
 0 !NDON: donors
 0 !NACC: acceptors
-
+0 !NNB
 .
 
