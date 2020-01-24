@@ -2,7 +2,7 @@ mol new PDBFILE
 mol addfile PSFFILE
 set sel [atomselect top "protein and name CA"]
 set chains [ lsort -uniq [$sel get chain]]
-set fp [open "/tmp/chain_residues.txt" "w"]
+set fp [open "build_files/chain_residues.txt" "w"]
 
 for {set i 0} { $i < [llength $chains]} {incr i} {
 	set temp_chain [lindex $chains $i]

@@ -1,5 +1,5 @@
 mol new PSFFILE
 mol addfile PDBFILE
 set sel [atomselect top "resname MG"]
-$sel writepdb /tmp/MG.pdb
+$sel writepdb build_files/MG.pdb
 exit 
