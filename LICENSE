@@ -1,3 +1,11 @@
+Unless otherwise stated all scripts and programs distributed in this repository 
+are distributed under the below MIT license. A non-exhaustive list is provided
+below. It is up to the user to keep track of their obligations with respect to 
+these licenses.
+
+script		Author        License
+top2psf.pl  Marc Baaden   BSD-3
+
 MIT License
 
 Copyright (c) 2020 Miro-Astore
@@ -19,3 +27,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
