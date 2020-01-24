@@ -1,6 +1,6 @@
 integrator              = md
 dt                      = 0.002
-nsteps                  = 15000000
+nsteps                  = 2500000
 nstlog                  = 5000
 nstxout                 = 5000
 nstvout                 = 5000
@@ -18,15 +18,14 @@ vdw-modifier            = Force-switch
 rvdw_switch             = 1.0
 rvdw                    = 1.2
 ;
-tcoupl                  = Nose-Hoover
+tcoupl                  = berendsen
 tc_grps                 = Protein   POPC   MG_ATP        SOLVENT
 tau_t                   = 1.0    1.0    1.0           1.0
 ref_t                   = 350.00   350.00   350.00    350.00
 ;
-pcoupl                  = Parrinello-Rahman
-pcoupltype              = semiisotropic
+pcoupl                  = berendsen
+pcoupltype              = semiisotropic 
 tau_p                   = 5.0
-;check this
 compressibility         = 4.5e-5  4.5e-5
 ref_p                   = 1.0     1.0
 ;
@@ -36,6 +35,6 @@ continuation            = yes
 ;
 nstcomm                 = 100
 comm_mode               = linear
-comm_grps               = System
+comm_grps               = System   
 ;
 refcoord_scaling        = com
