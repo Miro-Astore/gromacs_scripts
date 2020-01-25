@@ -15,11 +15,16 @@ module load gromacs/2019.3-gpuvolta
 cd $PBS_O_WORKDIR
 
 export OMP_NUM_THREADS=12
-gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb15.gro -n index.ndx -p topol.top 2>&1 | tee memb_prod1_setup.log 
-gmx mdrun -v -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 2>&1 | tee memb_prod1.log 
+if [ -f memb_prod1.cpt ]
+then
+gmx mdrun -v -cpi memb_prod1.cpt -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 
+else 
+gmx mdrun -v -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 
+fi 
+
 last_err=$?
 echo $last_err
 
 
 source $HOME/.bashrc
-if [  $last_err = 0 ] ; then nsub memb2.pbs ; fi
+if [  $last_err = 0 ] ; then nsub memb1.pbs ; fi
