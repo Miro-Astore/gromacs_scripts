@@ -2,8 +2,8 @@
 gro_file="../ionized.gro"
 top_file="../topol.top"
 top_root_dir=$(dirname $(readlink -f $top_file))
-psf_file="../I37R.psf"
-pdb_file="../I37R.pdb"
+psf_file="../R352Q.psf"
+pdb_file="../R352Q.pdb"
 
 mkdir -p psf_buildfiles
 

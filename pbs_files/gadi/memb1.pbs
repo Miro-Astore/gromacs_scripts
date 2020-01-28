@@ -28,7 +28,7 @@ then
 gmx mdrun -v -cpi memb_prod1.cpt -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
 md_proc=$!
 else 
-gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb_prod0.gro -n index.ndx -p topol.top 
+gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb16.gro -n index.ndx -p topol.top 
 gmx mdrun -v -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
 md_proc=$!
 
