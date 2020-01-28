@@ -26,12 +26,10 @@ export OMP_NUM_THREADS=12
 if [ -f memb_prod1.cpt ]
 then
 gmx mdrun -v -cpi memb_prod1.cpt -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
-last_err=$?
 md_proc=$!
 else 
-gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb16.gro -n index.ndx -p topol.top 
+gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb_prod0.gro -n index.ndx -p topol.top 
 gmx mdrun -v -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
-last_err=$?
 md_proc=$!
 
 fi 
@@ -39,11 +37,17 @@ fi
 echo $last_err
 echo $sleep_time
 
+#if the job has run for more than an hour resubmit it 
+
 #wait till the md process has finished and if it has exitted without errors resubmit this script to restart from a checkpoint
 tail --pid=$md_proc -f /dev/null
+last_err=$?
+wallt=$(qstat -f $PBS_JOBID | sed -rn 's/.*resources_used.walltime = (.*)/\1/p' ) 
+wallt=$(echo $wallt | awk -F: '{print $1}')
 
 source $HOME/.bashrc
-if [  $last_err = 0 ] ; 
+
+if [  $wallt > 0 ] ; 
 then 
 nsub memb1.pbs 
 fi
