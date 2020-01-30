@@ -19,7 +19,7 @@ rvdw                    = 1.2
 tcoupl                  = Nose-Hoover
 tc_grps                 = Protein  non-Protein 
 tau_t                   = 1.0    1.0    
-ref_t                   = 310.00   310.00   
+ref_t                   = 350.00   350.00   
 ;
 pcoupl                  = Parrinello-Rahman
 pcoupltype              = semiisotropic
