@@ -20,16 +20,16 @@ rvdw_switch             = 1.0
 rvdw                    = 1.2
 ;
 tcoupl                  = berendsen
-tc_grps                 = Protein   POPC   MG_ATP        SOLVENT
-tau_t                   = 1.0    1.0    1.0           1.0
-ref_t                   = 350.00   350.00   350.00    350.00
+tc_grps                 = Protein   non-Protein   
+tau_t                   = 1.0    1.0    
+ref_t                   = 350.00   350.00 
 ;
 constraints             = h-bonds
 constraint_algorithm    = LINCS
 ;
 nstcomm                 = 100
 comm_mode               = linear
-comm_grps               = System   
+comm_grps               = Protein non-Protein   
 ;
 gen-vel                 = yes
 gen-temp                = 303.15
