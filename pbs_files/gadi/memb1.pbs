@@ -47,7 +47,7 @@ wallt=$(echo $wallt | awk -F: '{print $1}')
 
 source $HOME/.bashrc
 
-if [  $wallt > 0 ] ; 
+if [  $wallt -gt 0 ] ; 
 then 
 nsub memb1.pbs 
 fi
