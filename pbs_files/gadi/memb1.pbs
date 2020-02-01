@@ -21,6 +21,8 @@ sleep_time=$( echo "$sleep_time * 0.95" |  bc -l )
 h_time=$( echo "$sleep_time / 3600" | bc -l )
 
 cd $PBS_O_WORKDIR
+#just doing this so we can see benchmarks over time and keep track of things.
+cp memb_prod1.log memb_prod1_backup.log
 
 export OMP_NUM_THREADS=12
 if [ -f memb_prod1.cpt ]
@@ -28,7 +30,7 @@ then
 gmx mdrun -v -cpi memb_prod1.cpt -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
 md_proc=$!
 else 
-gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb16.gro -t memb16.cpt -n index.ndx -p topol.top 
+gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb16.gro  -n index.ndx -p topol.top 
 gmx mdrun -v -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
 md_proc=$!
 
