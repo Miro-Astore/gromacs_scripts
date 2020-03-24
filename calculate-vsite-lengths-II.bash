@@ -1,4 +1,6 @@
 #!/bin/bash
+### AUTHOR: Po-chia Chen chen.buo.jia@gmail.com
+### MODIFIED: Miro A. Astore miro.astore@gmail.com
 
 #source $HOME/scripts/functions.bash
 
@@ -47,6 +49,7 @@ function grab-bond-angle() {
             print " = = ERROR: at least one of the parameters are missing!" > "/dev/stderr"
             print " = = Bond1:", bond1, "Bond2:", bond2, "Angle:", angle > "/dev/stderr"
         }
+		print " = = Bond1:", bond1, "Bond2:", bond2, "Angle:", angle > "/dev/stderr"
         print bond1, bond2, angle
     } ' $1
 }
@@ -145,11 +148,11 @@ while [ $# -gt 0 ] ; do
         mratio=$( echo  "3*$m3/(3*$m3+$m2 )" | bc -l )
         #mmdist=$( echo  "($mratio)^0.5 *s($arad)*$bond2*2.0" | bc -l  )
 		echo "test"
-        mmdist=$( echo  "$mratio^0.5 *s($arad)" | bc -l  )
+		mmdist=$( echo  "sqrt($mratio) *s($arad)*$bond2*2.0" | bc -l  )
 		echo "test"
 		echo $mmdist
         comdist=$(echo " $mratio*-1*c($arad)*$bond2 " | bc -l )
-        cmdist=$( echo "(($bond1+$comdist)^2+($mmdist*0.5)^2)^0.5" | bc -l  )
+        cmdist=$( echo "sqrt(($bond1+$comdist)^2+($mmdist*0.5)^2)" | bc -l  )
 
         echo " ...XH3 mass ratio: $mratio -- MXH3dist: $mmdist -- COM ext.: $comdist -- final constraint length: $cmdist"
         echo " For comparison from reffile: " $(grep "$dum.*$dum" $reffile)
