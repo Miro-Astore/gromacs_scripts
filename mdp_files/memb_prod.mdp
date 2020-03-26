@@ -25,7 +25,7 @@ pcoupl                  = Parrinello-Rahman
 pcoupltype              = semiisotropic
 tau_p                   = 5.0
 ;check this
-compressibility         = 4.5e-5  4.5e-5
+compressibility         = 0  4.5e-5
 ref_p                   = 1.0     1.0
 ;
 constraints             = h-bonds
