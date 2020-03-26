@@ -1,7 +1,7 @@
 #!/bin/bash
 
-minimisation
-gmx grompp -f memb0.mdp -o memb0.tpr -c converted.gro -r converted.gro -p topol.top 
+#minimisation
+gmx grompp -f memb0.mdp -o memb0.tpr -c ionized.gro -r converted.gro -p topol.top 
 gmx mdrun -v -deffnm memb0
 
 #eq 
