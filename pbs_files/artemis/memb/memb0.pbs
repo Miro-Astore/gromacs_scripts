@@ -1,5 +1,6 @@
 #!/bin/bash
 #PBS -P Akt_MD
+#PBS -N putsomethingheresillyboy
 #PBS -l ngpus=1
 #PBS -l ncpus=12
 #PBS -m abe

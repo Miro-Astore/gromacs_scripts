@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -P Akt_MD
-#PBS -N vsite
+#PBS -N putsomething here silly boy 
 #PBS -l ncpus=12
 #PBS -l ngpus=1
 #PBS -m abe
