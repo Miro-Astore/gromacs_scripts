@@ -1,0 +1,35 @@
+#!/bin/bash
+#PBS -P Akt_MD
+#PBS -l ngpus=1
+#PBS -l ncpus=12
+#PBS -m abe
+#PBS -l walltime=48:00:00
+#PBS -l mem=8GB
+#PBS -M yearlyboozefest@gmail.com
+
+#
+module load gromacs/2020.1-intel-thread-mpi-gpu
+cd $PBS_O_WORKDIR
+
+export OMP_NUM_THREADS=12
+gmx grompp -f memb1.mdp -o memb0.tpr -c ionized.gro -n index.ndx -p topol.top 
+gmx mdrun -v -ntmpi 1 -ntomp 12 -deffnm memb0 2>&1 
+#
+gmx mdrun -v -ntmpi 1 -ntomp 12 -deffnm memb1 
+for i in $(seq 1 16); 
+do 
+module load gromacs/2019.1-intel
+
+gmx grompp -f memb$i\.mdp -o memb$i\.tpr -c memb$(( $i - 1 ))\.gro -r memb$(( $i - 1 ))\.gro -n index.ndx -p topol.top 
+module purge
+module load gromacs/2020.1-intel-thread-mpi-gpu
+gmx mdrun -v -ntmpi 1 -ntomp 12 -deffnm memb$i 
+module purge
+last_err=$?
+echo $last_err 
+done
+#
+
+#if the runs have finished submit the next job
+source $HOME/.bashrc
+if [  -f memb16.gro  ] ; then qsub -N vsite memb1.pbs ; fi
