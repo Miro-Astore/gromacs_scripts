@@ -22,7 +22,7 @@ tau_t                   = 1.0    1.0
 ref_t                   = 310.00   310.00   
 ;
 pcoupl                  = Parrinello-Rahman
-pcoupltype              = semiisotropic
+pcoupltype              = isotropic
 tau_p                   = 5.0
 ;check this
 compressibility         = 4.5e-5
