@@ -1,6 +1,10 @@
 #!/bin/bash
 #PBS -P Akt_MD
+<<<<<<< HEAD
 #PBS -N wtac
+=======
+#PBS -N nbd
+>>>>>>> e34d4a97c8011e03ca48b4ec9c7ead5cc75e3b96
 #PBS -l ncpus=12
 #PBS -l ngpus=1
 #PBS -m abe
