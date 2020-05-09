@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -P Akt_MD
-#PBS -N putsomething here silly boy 
+#PBS -N wtac
 #PBS -l ncpus=12
 #PBS -l ngpus=1
 #PBS -m abe
@@ -30,7 +30,7 @@ md_proc=$!
 else 
 	module purge
 	module load gromacs/2019.1-intel
-gmx grompp -f glob_prod.mdp -o glob_prod1.tpr -c glob16.gro  -n index.ndx -p topol.top 
+gmx grompp -f glob_prod.mdp -o glob_prod1.tpr -c glob1.gro  -n index.ndx -p topol.top 
 module purge
 module load gromacs/2020.1-intel-thread-mpi-gpu
 gmx mdrun -v -ntmpi 1 -ntomp $OMP_NUM_THREADS -deffnm glob_prod1 -maxh $h_time &
@@ -53,6 +53,6 @@ source $HOME/.bashrc
 
 if [  $wallt -gt 0 ] ; 
 then 
-qsub -N vsite glob1.pbs 
+qsub  glob1.pbs 
 fi
 exit 
