@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -P Akt_MD
-#PBS -N nbd
+#PBS -N remembertoputsomethinghere
 #PBS -l ngpus=1
 #PBS -l ncpus=12
 #PBS -m abe
@@ -30,4 +30,4 @@ echo $last_err
 
 #if the runs have finished submit the next job
 source $HOME/.bashrc
-if [  -f glob16.gro  ] ; then qsub -N vsite glob1.pbs ; fi
+if [  -f glob1.gro  ] ; then qsub glob1.pbs ; fi
