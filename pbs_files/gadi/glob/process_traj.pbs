@@ -1,0 +1,15 @@
+#!/bin/bash
+#PBS -P r16
+#PBS -N helix
+#PBS -q normal
+#PBS -l ncpus=4
+#PBS -l walltime=48:00:00
+#PBS -l storage=scratch/r16
+#PBS -l mem=8GB
+#PBS -M yearlyboozefest@gmail.com
+
+module load gromacs/2020.1
+#cd $PBS_O_WORKDIR
+
+echo -e "1\n0" | gmx trjconv -f glob_prod1.xtc -s glob0.tpr -pbc whole -center yes  -o sum.xtc
+gmx trjcat -dt 1000 -f sum.xtc  -o sum_sum.xtc

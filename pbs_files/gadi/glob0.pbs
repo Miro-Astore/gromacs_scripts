@@ -1,0 +1,30 @@
+#!/bin/bash
+#PBS -P r16
+#PBS -N helix
+#PBS -l ngpus=1
+#PBS -q gpuvolta
+#PBS -l ncpus=12
+#PBS -l walltime=12:00:00
+#PBS -l storage=scratch/r16
+#PBS -l mem=8GB
+#PBS -M yearlyboozefest@gmail.com
+
+module load gromacs/2020.1-gpuvolta
+cd $PBS_O_WORKDIR
+
+export OMP_NUM_THREADS=12
+gmx grompp -f glob0.mdp -o glob0.tpr -c ionized.gro -n index.ndx -p topol.top 
+gmx mdrun -v -ntmpi 1 -ntomp $OMP_NUM_THREADS -deffnm glob0 2>&1 
+
+gmx grompp -f glob1.mdp -o glob1.tpr -c glob0.gro -r glob0.gro -n index.ndx -p topol.top 
+
+gmx mdrun -v -ntmpi 1 -ntomp $OMP_NUM_THREADS -deffnm glob1
+
+module purge
+last_err=$?
+echo $last_err 
+#
+
+#if the runs have finished submit the next job
+source $HOME/.bashrc
+if [  -f glob1.gro  ] ; then qsub glob1.pbs ; fi
