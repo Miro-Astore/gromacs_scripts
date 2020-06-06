@@ -1,6 +1,6 @@
-define                  = -DRELAXA_12 -DRELAXB_12 -DRELAXR_12 -DRELAXR2_12
+define                  = -DRELAXA_5 -DRELAXB_5 -DRELAXR_5 -DRELAXR2_5
 integrator              = md
-dt                      = 0.001
+dt                      = 0.002
 nsteps                  = 200000
 nstlog                  = 5000
 nstxout-compressed      = 5000
@@ -28,7 +28,7 @@ tau_p                   = 5.0
 compressibility         = 4.5e-5  4.5e-5
 ref_p                   = 1.0     1.0
 ;
-constraints             = h-bonds
+constraints             = all-bonds
 constraint_algorithm    = LINCS
 continuation            = yes
 ;

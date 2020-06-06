@@ -2,7 +2,7 @@ integrator              = md
 dt                      = 0.002
 nsteps                  = 300000000
 nstlog                  = 5000
-nstxtcout               = 5000
+nstxout-compressed      = 5000
 nstcalcenergy           = 5000
 nstenergy               = 5000
 ;
@@ -25,7 +25,8 @@ pcoupl                  = Parrinello-Rahman
 pcoupltype              = semiisotropic
 tau_p                   = 5.0
 ;check this
-compressibility         = 0  4.5e-5
+compressibility         = 4.5e-5 4.5e-5
+
 ref_p                   = 1.0     1.0
 ;
 constraints             = h-bonds

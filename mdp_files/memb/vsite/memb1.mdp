@@ -1,6 +1,6 @@
-define                  = -DRELAXA_12 -DRELAXB_12 -DRELAXR_12 -DRELAXR2_12
+define                  = -DRELAXA_1 -DRELAXB_1 -DRELAXR_1 -DRELAXR2_1
 integrator              = md
-dt                      = 0.001
+dt                      = 0.002
 nsteps                  = 200000
 nstlog                  = 5000
 nstxout-compressed      = 5000
@@ -18,9 +18,9 @@ rvdw_switch             = 1.0
 rvdw                    = 1.2
 ;
 tcoupl                  = berendsen
-tc_grps                 = Protein  non-Protein 
+tc_grps                 = Protein   non-Protein   
 tau_t                   = 1.0    1.0    
-ref_t                   = 310.00   310.00   
+ref_t                   = 310.00   310.00 
 ;
 pcoupl                  = berendsen
 pcoupltype              = semiisotropic 
@@ -28,12 +28,15 @@ tau_p                   = 5.0
 compressibility         = 4.5e-5  4.5e-5
 ref_p                   = 1.0     1.0
 ;
-constraints             = h-bonds
+constraints             = all-bonds
 constraint_algorithm    = LINCS
-continuation            = yes
 ;
 nstcomm                 = 100
 comm_mode               = linear
 comm_grps = System
+;
+gen-vel                 = yes
+gen-temp                = 303.15
+gen-seed                = -1
 ;
 refcoord_scaling        = com

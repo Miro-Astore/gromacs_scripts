@@ -3,9 +3,7 @@ integrator              = md
 dt                      = 0.001
 nsteps                  = 200000
 nstlog                  = 5000
-nstxout                 = 5000
-nstvout                 = 5000
-nstfout                 = 5000
+nstxout-compressed      = 5000
 nstcalcenergy           = 100
 nstenergy               = 5000
 ;
