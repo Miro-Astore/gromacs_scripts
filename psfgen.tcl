@@ -1,9 +1,10 @@
-mol new ./global_wtfit_3.pdb 
+mol new ./global_wtfit_1.pdb 
 set sel [atomselect top "all"]
-set segnames [$sel get chain]
+set segnames [$sel get segname]
 set segnames [lsort -uniq $segnames]
 foreach seg $segnames { 
-	set sel [atomselect top "chain $seg"]
+	set sel [atomselect top "segname $seg"]
+	$sel set chain $seg
 	$sel writepdb $seg\P1.pdb
 }
 

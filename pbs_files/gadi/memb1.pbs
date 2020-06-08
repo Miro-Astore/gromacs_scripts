@@ -10,7 +10,7 @@
 #PBS -l wd
 #PBS -M yearlyboozefest@gmail.com
 
-module load gromacs/2019.3-gpuvolta
+module load gromacs/2020.1-gpuvolta
 
 root=$(qstat -f $PBS_JOBID | sed -rn 's/.*Resource_List.walltime = (.*)/\1/p' ) 
 h=$(echo $root | awk -F: '{print $1}')
