@@ -49,10 +49,12 @@ restr_line=1
 
 for chain in $(cat chain_out.txt );
 do 
-	echo -e "chain $chain\nq\n" | gmx make_ndx -f glob0.tpr -o out.ndx 
+	echo -e "chain $chain\nq\n" | gmx make_ndx -f memb0.tpr -o out.ndx 
+	chain_n=$(cat out.ndx | grep "^\[" | wc -l)
+	#chain_n=$(cat index.ndx | grep "^\[" | awk '/ Protein-H /{ print NR; exit }' )
+	chain_n=$(( $chain_n - 1 ))
 
-
-	echo -e "0\n" | gmx editconf -f glob0.tpr -o building_gro$chain.pdb -n out.ndx 
+	echo -e "$chain_n\n" | gmx editconf -f memb0.tpr -o building_gro$chain.pdb -n out.ndx 
 	echo $restr_line
 	topol_file=$( cat $TOPOLIST | sed "$restr_line q;d" );
 	restr_line=$(($restr_line + 1))
