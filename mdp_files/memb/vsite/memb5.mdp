@@ -1,4 +1,4 @@
-define                  = -DRELAXA_5 -DRELAXB_5 -DRELAXR_5 -DRELAXR2_5
+define                  = -DRELAX5
 integrator              = md
 dt                      = 0.002
 nsteps                  = 200000
