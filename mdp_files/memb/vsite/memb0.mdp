@@ -11,5 +11,5 @@ rvdw                    = 1.2
 coulombtype             = pme
 rcoulomb                = 1.2
 ;
-constraints             = none
-;constraint_algorithm    = LINCS
+constraints             = h-bonds
+constraint_algorithm    = LINCS
