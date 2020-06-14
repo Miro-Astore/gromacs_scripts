@@ -3,7 +3,7 @@
 #PBS -q gpuvolta
 #PBS -l ngpus=1
 #PBS -l ncpus=12
-#PBS -l storage=scratch/r16
+#PBS -l storage=scratch/f91
 #PBS -m abe
 #PBS -l walltime=48:00:00
 #PBS -l mem=8GB
@@ -29,4 +29,4 @@ done
 
 #if the runs have finished submit the next job
 source $HOME/.bashrc
-if [  -f memb16.gro  ] ; then nsub memb1.pbs ; fi
+if [  -f memb16.gro  ] ; then nsub memb1.pbs  ; fi

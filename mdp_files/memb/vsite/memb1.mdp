@@ -36,7 +36,7 @@ comm_mode               = linear
 comm_grps = System
 ;
 gen-vel                 = yes
-gen-temp                = 303.15
+gen-temp                = 310.00
 gen-seed                = -1
 ;
 refcoord_scaling        = com

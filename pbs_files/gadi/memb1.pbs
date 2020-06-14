@@ -1,9 +1,9 @@
 #!/bin/bash
 #PBS -P r16
 #PBS -q gpuvolta
-#PBS -l ngpus=4
-#PBS -l ncpus=48
-#PBS -l storage=scratch/r16
+#PBS -l ngpus=1
+#PBS -l ncpus=12
+#PBS -l storage=scratch/f91
 #PBS -m abe
 #PBS -l walltime=12:00:00
 #PBS -l mem=8GB
@@ -30,7 +30,7 @@ then
 gmx mdrun -v -cpi memb_prod1.cpt -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
 md_proc=$!
 else 
-gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb16.gro  -n index.ndx -p topol.top 
+gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb16.gro   -p topol.top 
 gmx mdrun -v -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
 md_proc=$!
 
