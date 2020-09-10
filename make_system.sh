@@ -1,7 +1,7 @@
 
 #gmx pdb2gmx -f l.pdb -o memb.gro -ff charmm36-nov2016-newvs -water tip3 -vsite hydrogens
 #gmx pdb2gmx -f out2.pdb -o prot.gro -ff charmm36-mar2019 -water tip3 -ter -his -ss
-gmx pdb2gmx -f 6hhj_autopsf.pdb -o prot.gro -ff charmm36-mar2019 -water tip3 -ss yes
+gmx pdb2gmx -f 6hhj_out.BL00070003.pdb -o prot.gro -ff charmm36-mar2019 -water tip3 -ss yes
 gmx editconf -f prot.gro -o box.gro -c yes -d 1.4
 gmx solvate -cp box.gro -cs spc216 -o solvate.gro   -p topol.top
 
@@ -17,4 +17,4 @@ gmx editconf -f visualise.tpr -o ionized.pdb -conect
 
 sed -i "s/ENDMDL//g" ionized.pdb
 
-rm visualise.tpr
+visualise.tpr

@@ -1,0 +1,9 @@
+gmx grompp -f glob0.mdp -o glob0.tpr -c ionized.gro -n index.ndx -p topol.top 
+gmx mdrun -v   -deffnm glob0 2>&1 
+
+gmx grompp -f glob1.mdp -o glob1.tpr -c glob0.gro -r glob0.gro -n index.ndx -p topol.top 
+
+gmx mdrun -v -ntmpi 1  -deffnm glob1
+
+
+#if the runs have finished submit the next job
