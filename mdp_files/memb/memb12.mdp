@@ -1,4 +1,4 @@
-define                  = -DRELAXA_12 -DRELAXB_12 -DRELAXR_12 -DRELAXR2_12
+define                  = -DRELAX12
 integrator              = md
 dt                      = 0.001
 nsteps                  = 200000

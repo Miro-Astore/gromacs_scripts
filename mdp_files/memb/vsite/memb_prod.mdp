@@ -1,6 +1,6 @@
 integrator              = md
 dt                      = 0.004
-nsteps                  = 50000000
+nsteps                  = 500000000
 nstlog                  = 5000
 nstxout-compressed      = 5000
 nstcalcenergy           = 5000
