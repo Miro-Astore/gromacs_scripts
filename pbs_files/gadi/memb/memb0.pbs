@@ -10,7 +10,7 @@
 #PBS -l wd
 #PBS -M yearlyboozefest@gmail.com
 
-module load gromacs/2020.1-gpuvolta
+module load gromacs/2021-gpuvolta
 #
 cd $PBS_O_WORKDIR
 
