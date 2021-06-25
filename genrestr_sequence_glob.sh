@@ -49,7 +49,7 @@ restr_line=1
 
 for chain in $(cat chain_out.txt );
 do 
-	echo -e "chain $chain\nq\n" | gmx make_ndx -f memb0.tpr -o out.ndx 
+	echo -e "chain $chain\nq\n" | gmx make_ndx -f $PROTEINPDBFILE -o out.ndx 
 	chain_n=$(cat out.ndx | grep "^\[" | wc -l)
 	#chain_n=$(cat index.ndx | grep "^\[" | awk '/ Protein-H /{ print NR; exit }' )
 	chain_n=$(( $chain_n - 1 ))

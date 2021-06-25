@@ -1,0 +1,31 @@
+2MG
+OPC
+ATP
+CLA
+POT
+HOH
+
+ION 
+LO 
+RO1 
+RO2 
+W
+
+[ Ion ]
+[ MG ]
+[ POPC ]
+[ ATP ]
+[ CLA ]
+[ POT ]
+[ Other ]
+[ MG ]
+[ POPC ]
+[ ATP ]
+[ CLA ]
+[ POT ]
+[ Water ]
+[ SOL ]
+[ non-Water ]
+[ Water_and_ions ]
+[ SOLVENT ]
+[ MG_ATP ]

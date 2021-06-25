@@ -1,6 +1,7 @@
 #USAGE
 # bash gromacs_scripts/make_psf.sh ionized.pdb ionized.psf
-#gmx editconf -f memb0.tpr -o ionized.pdb -conect
+#may need to edit globs or membs to specify right tpr file
+gmx editconf -f glob0.tpr -o ionized.pdb -conect
 cat $1 | grep -v END | grep -v SOL | grep -v "\sK\s" | grep -v "\sCL\s" | grep -v "\sNA\s" > connected.pdb
 cat ionized.pdb | grep -v END | grep -E 'SOL|\sNA\s|\sK\s|\sCL\s' > unconnected.pdb
 

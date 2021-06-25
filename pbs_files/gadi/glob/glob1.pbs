@@ -1,6 +1,5 @@
 #!/bin/bash
 #PBS -P r16
-#PBS -N helix
 #PBS -l ngpus=1
 #PBS -q gpuvolta
 #PBS -l ncpus=12
