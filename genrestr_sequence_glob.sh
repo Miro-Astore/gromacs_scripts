@@ -54,7 +54,7 @@ do
 	#chain_n=$(cat index.ndx | grep "^\[" | awk '/ Protein-H /{ print NR; exit }' )
 	chain_n=$(( $chain_n - 1 ))
 
-	echo -e "$chain_n\n" | gmx editconf -f memb0.tpr -o building_gro$chain.pdb -n out.ndx 
+	#echo -e "$chain_n\n" | gmx editconf -f memb0.tpr -o building_gro$chain.pdb -n out.ndx 
 	echo $restr_line
 	topol_file=$( cat $TOPOLIST | sed "$restr_line q;d" );
 	restr_line=$(($restr_line + 1))
