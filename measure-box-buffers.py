@@ -15,7 +15,7 @@ def calc_fragment_dimensions(listFragments):
     return x.max(axis=0) - x.min(axis=0)
     #return np.max( self_distance_array( x ) )
 
-fileTOP='./seg.psf'
+fileTOP='./ionized.psf'
 fileTRJ='./sum.xtc'
 #textSel='protein'
 textSelection="protein and not name MN? 1MN? 2MN? 1MC? 2MC?"
@@ -42,7 +42,9 @@ for f in range(u.trajectory.n_frames):
     #DMaxBox=np.min(u.dimensions[0:2])
     DMaxBox=u.dimensions[0:3]
     DMaxMol=calc_fragment_dimensions(listFrags)
-    np.min(DMaxBox-DMaxMol)
+    currentMin=np.min(DMaxBox-DMaxMol)
+    if currentMin < runningMin:
+        runningMin=currentMin
 
-    temp_min = np.min(DMaxBox-DMaxMol)
-print(f, temp_min)
+
+print(f, runningMin)
