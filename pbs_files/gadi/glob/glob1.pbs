@@ -4,11 +4,11 @@
 #PBS -q gpuvolta
 #PBS -l ncpus=12
 #PBS -l walltime=12:00:00
-#PBS -l storage=scratch/r16
+#PBS -l storage=scratch/r16+scratch/f91
 #PBS -l mem=8GB
 #PBS -M yearlyboozefest@gmail.com
 
-module load gromacs/2020.1-gpuvolta
+module load gromacs/2021.2-gpuvolta
 
 echo $GMXLIB
 
