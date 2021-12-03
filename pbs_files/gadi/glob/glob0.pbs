@@ -19,8 +19,8 @@ gmx grompp -f glob1.mdp -o glob1.tpr -c glob0.gro -r glob0.gro -n index.ndx -p t
 
 for i in $(seq 1 15); 
 do 
-gmx grompp -f memb$i\.mdp -o memb$i\.tpr -c memb$(( $i - 1 ))\.gro -r memb$(( $i - 1 ))\.gro -n index.ndx -p topol.top 
-gmx mdrun -v -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm memb$i 
+gmx grompp -f glob$i\.mdp -o glob$i\.tpr -c glob$(( $i - 1 ))\.gro -r glob$(( $i - 1 ))\.gro -n index.ndx -p topol.top 
+gmx mdrun -v -ntmpi $PBS_NGPUS -ntomp $OMP_NUM_THREADS -deffnm glob$i 
 last_err=$?
 echo $last_err 
 done
@@ -32,4 +32,4 @@ echo $last_err
 
 #if the runs have finished submit the next job
 source $HOME/.bashrc
-if [  -f glob1.gro  ] ; then qsub glob1.pbs ; fi
+if [  -f glob15.gro  ] ; then qsub glob1.pbs ; fi

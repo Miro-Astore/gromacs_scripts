@@ -51,6 +51,6 @@ source $HOME/.bashrc
 
 if [  $wallt -gt 0 ] ; 
 then 
-qsub  glob1.pbs 
+nsub  glob1.pbs 
 fi
 exit 
