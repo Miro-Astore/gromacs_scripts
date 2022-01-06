@@ -9,7 +9,7 @@
 #PBS -l wd
 #PBS -M yearlyboozefest@gmail.com
 
-module load gromacs/2020.1-intel
+module load gromacs/2020.1
 #cd $PBS_O_WORKDIR
 
 echo -e "1\n0" | gmx trjconv -f glob_prod1.xtc -s glob0.tpr -pbc whole -center yes  -o glob_temp.xtc -dt 1000
