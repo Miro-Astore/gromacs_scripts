@@ -9,7 +9,7 @@
 #PBS -l mem=8GB
 #PBS -M yearlyboozefest@gmail.com
 
-module load gromacs/2020.1-intel-thread-mpi-gpu
+module load gromacs/2021-gpu
 
 root=$(qstat -f $PBS_JOBID | sed -rn 's/.*Resource_List.walltime = (.*)/\1/p' ) 
 h=$(echo $root | awk -F: '{print $1}')
@@ -29,11 +29,7 @@ then
 gmx mdrun -v -cpi memb_prod1.cpt -ntmpi 1 -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
 md_proc=$!
 else 
-	module purge
-	module load gromacs/2019.1-intel
 gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb16.gro  -n index.ndx -p topol.top 
-module purge
-module load gromacs/2020.1-intel-thread-mpi-gpu
 gmx mdrun -v -ntmpi 1 -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
 md_proc=$!
 

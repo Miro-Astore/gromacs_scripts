@@ -8,7 +8,7 @@
 #PBS -l mem=8GB
 #PBS -M yearlyboozefest@gmail.com
 
-module load gromacs/2021.2-gpuvolta
+module load gromacs/2021.4-gpuvolta
 
 echo $GMXLIB
 
