@@ -1,0 +1,10 @@
+gmx grompp -f memb0.mdp -o memb0.tpr -c ionized.gro -n index.ndx -p topol.top 
+gmx mdrun -v -deffnm memb0 2>&1 
+#
+for i in $(seq 1 16); 
+do 
+gmx grompp -f memb$i\.mdp -o memb$i\.tpr -c memb$(( $i - 1 ))\.gro -r memb$(( $i - 1 ))\.gro -n index.ndx -p topol.top 
+gmx mdrun -v -deffnm memb$i 
+done
+#
+

@@ -1,0 +1,1 @@
+set sel [atomselect top "protein and ((resid 1 and name H1 H2 H3) or (resid 637 and name OE1 NE2 HE21 HE22) or () or () ) "]
