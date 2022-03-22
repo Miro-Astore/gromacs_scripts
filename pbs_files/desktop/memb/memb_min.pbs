@@ -1,0 +1,2 @@
+gmx grompp -f memb0.mdp -o memb0.tpr -c ionized.gro -n index.ndx -p topol.top 
+gmx mdrun -v -deffnm memb0 2>&1 
