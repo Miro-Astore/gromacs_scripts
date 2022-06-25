@@ -42,6 +42,9 @@ cd build
 
 #using gadi optimised c compiler
 cmake -DCMAKE_INSTALL_PREFIX=/scratch/f91/ma2374/programs/gromacs -DGMX_GPU=CUDA -DGMX_FFT_LIBRARY=mkl   -DMKL_LIBRARIES=$LIBS -DMKL_INCLUDE_DIR=$MKL/include -DGMX_MPI=on -DCMAKE_LINKER=mpicc -DCMAKE_CXX_COMPILER=mpic++ -DGMX_HWLOC=OFF ..
+ 
+#a100 gadi install. uses AVX2_256 instructions ( think cuz of the amd chips) also here we have used the openmpi compiler and not the gadi installed gcc C compiler (still used mpi C++ compiler)
+cmake -DCMAKE_INSTALL_PREFIX=/scratch/f91/ma2374/programs/gromacs_a100_mpicc -DGMX_GPU=CUDA -DGMX_FFT_LIBRARY=mkl   -DMKL_LIBRARIES=$LIBS -DMKL_INCLUDE_DIR=$MKL/include -DGMX_MPI=on -DCMAKE_C_COMPILER=mpicc -DCMAKE_LINKER=mpicc -DCMAKE_CXX_COMPILER=mpic++ -DGMX_HWLOC=OFF .. -DGMX_SIMD=AVX2_256 -DGMX_BUILD_MDRUN_ONLY=on
 
 make
 make check
