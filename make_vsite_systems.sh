@@ -1,3 +1,4 @@
+## USAGE bash gromacs_scripts/make_vsite_system <SYSNAME> 
 #rm memb.gro
 #rm topol.top
 #rm box.gro
