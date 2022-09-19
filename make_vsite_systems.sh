@@ -1,4 +1,4 @@
-## USAGE bash gromacs_scripts/make_vsite_system <SYSNAME> 
+## USAGE bash gromacs_scripts/make_vsite_systems.sh <SYSNAME> 
 #rm memb.gro
 #rm topol.top
 #rm box.gro
@@ -22,6 +22,9 @@ module load vmd
 module load gromacs/2020.1
 
 	rm \#*\#
+
+echo "$1"
+echo "hi"
 vmddisp gromacs_scripts/strip_water.tcl $1.psf $1.pdb 
 echo -e "0\n2\n1\n0\n" | gmx pdb2gmx -f waterless.pdb -o memb.gro -ff charmm36m_newvs-may2020 -water tip3 -vsite hydrogens -ter 
 gmx editconf -f memb.gro -o box.gro -c yes -box 11.2 11.2 18.2 
