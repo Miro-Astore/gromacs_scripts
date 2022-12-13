@@ -1,0 +1,122 @@
+#!/bin/bash
+#SBATCH -D ./
+#SBATCH -J equil
+#SBATCH -o out.out
+#SBATCH -o err.out
+#SBATCH --partition=preempt
+#SBATCH --qos=preempt
+#SBATCH --constraint=rome,ib
+# Request 5 node(s)
+#SBATCH --nodes=5
+# Set the number of tasks per node (=MPI ranks)
+#SBATCH --ntasks-per-node=30
+# Set the number of threads per rank (=OpenMP threads)
+#SBATCH --cpus-per-task=4
+#SBATCH --time 12:00:00
+
+cp out.out out.old
+cp err.out err.old
+
+##SBATCH -p=gpu
+##SBATCH -c=16
+##SBATCH -C=a100,ib
+##SBATCH --mem=8000
+##SBATCH --gpus=1
+##SBATCH -o out.out
+##SBATCH -e error.err
+##SBATCH --job-name=equilibration
+## -J  for short hand 
+
+
+module purge
+module load cuda
+module load modules/2.1-alpha0
+module load openmpi/4.0.7
+
+module load gromacs/mpi-2022.3
+
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
+#!/bin/bash
+
+
+line=$(squeue -h -j $SLURM_JOBID -O timelimit) # Leading '-' aids parsing.
+line=$(echo -$line)
+
+parts=( 0 0 0 0 )
+index=3
+
+while [ ${#line} -gt 0 ]; do
+  parts[${index}]=${line##*[-:]}
+    line=${line%[-:]*}
+      ((index--))
+      done
+
+root=$(echo ${parts[*]})
+
+
+d=$(echo $root | awk  '{print $1}')
+
+h=$(echo $root | awk  '{print $2}')
+m=$(echo $root | awk  '{print $3}')
+s=$(echo $root | awk  '{print $4}')
+
+sleep_time=$(( $d * 86400 + $h*3600 + $m * 60 + $s ))
+sleep_time=$( echo "$sleep_time * 0.95" |  bc -l )
+h_time=$( echo "$sleep_time / 3600" | bc -l )
+
+#just doing this so we can see benchmarks over time and keep track of things.
+cp memb_prod1.log memb_prod1_backup.log
+
+if [ -f memb_prod1.cpt ]
+then
+#gmx mdrun -v -cpi memb_prod1.cpt -ntmpi $SLURM_GPUS_PER_NODE -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
+mpirun --map-by socket:pe=$OMP_NUM_THREADS gmx_mpi mdrun -v -maxh $h_time -noconfout -deffnm memb_prod1 -cpi memb_prod1.cpt &
+md_proc=$!
+else 
+#gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb6.gro   -p topol.top  -n index.ndx
+
+mpirun --map-by socket:pe=$OMP_NUM_THREADS gmx_mpi mdrun -v -maxh $h_time -deffnm memb_prod1
+
+md_proc=$!
+
+fi 
+
+echo $last_err
+echo $sleep_time
+
+#if the job has run for more than an hour resubmit it 
+
+#wait till the md process has finished and if it has exitted without errors resubmit this script to restart from a checkpoint
+tail --pid=$md_proc -f /dev/null
+last_err=$?
+
+line=$(squeue -h -j $SLURM_JOBID -O timeused) # Leading '-' aids parsing.
+line=$(echo -$line)
+
+parts=( 0 0 0 0 )
+index=3
+
+while [ ${#line} -gt 0 ]; do
+  parts[${index}]=${line##*[-:]}
+    line=${line%[-:]*}
+      ((index--))
+      done
+
+root=$(echo ${parts[*]})
+
+
+used_d=$(echo $root | awk  '{print $1}')
+
+used_h=$(echo $root | awk  '{print $2}')
+
+total_h=$(( $used_d * 24 + $used_h))
+
+alias nbatch="sbatch -J $( echo "$(echo $SLURM_SUBMIT_DIR | awk -F/ '{print $(NF-2)$(NF-1)$NF}' | sed "s^_^^g" | sed "s^memb^^g" | sed "s^plumed^^g" | sed "s^CFTR^^g" | sed "s^simreadysystems^^")$(echo $1 | sed "s^\.pbs^^g" | sed "s^_^^g" | sed "s^memb^^g"  |sed "s^glob^^g" | sed "s^window^^g" )" | tail -c 11 ) "
+
+
+if [  $total_h -gt 0 ] ; 
+then 
+nbatch memb1.slurm
+fi
+exit 

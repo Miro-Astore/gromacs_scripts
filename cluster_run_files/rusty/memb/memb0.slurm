@@ -1,18 +1,14 @@
 #!/bin/bash
-#PBS -P r16
-#PBS -q gpuvolta
-#PBS -l ngpus=1
-#PBS -l ncpus=12
-#PBS -l storage=scratch/f91
-#PBS -m abe
-#PBS -l walltime=48:00:00
-#PBS -l mem=8GB
-#PBS -l wd
-#PBS -M yearlyboozefest@gmail.com
+#SBATCH --parititon=gpu
+#SBATCH -o $j.out
+#SBATCH -e $j.err
+#SBATCH --time=24:00:00
+#SBATCH --job-name=equilibration
+# -J  for short hand 
 
-module load gromacs/2021-gpuvolta
-#
-cd $PBS_O_WORKDIR
+module load gromacs/skylake-singlegpunode-2022
+
+#cd $PBS_O_WORKDIR
 
 export OMP_NUM_THREADS=12
 gmx grompp -f memb0.mdp -o memb0.tpr -c ionized.gro -n index.ndx -p topol.top 
