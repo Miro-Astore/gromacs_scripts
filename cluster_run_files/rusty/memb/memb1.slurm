@@ -1,18 +1,20 @@
 #!/bin/bash
 #SBATCH -D ./
-#SBATCH -J equil
+#SBATCH -J prod
 #SBATCH -o out.out
-#SBATCH -o err.out
+#SBATCH -e err.out
+##SBATCH --partition=ccb
 #SBATCH --partition=preempt
 #SBATCH --qos=preempt
+#SBATCH --requeue
 #SBATCH --constraint=rome,ib
-# Request 5 node(s)
-#SBATCH --nodes=5
 # Set the number of tasks per node (=MPI ranks)
 #SBATCH --ntasks-per-node=30
+#SBATCH --time 12:00:00
+# Request 10 node(s)
+#SBATCH --nodes=10
 # Set the number of threads per rank (=OpenMP threads)
 #SBATCH --cpus-per-task=4
-#SBATCH --time 12:00:00
 
 cp out.out out.old
 cp err.out err.old
@@ -30,9 +32,9 @@ cp err.out err.old
 
 module purge
 module load cuda
-module load modules/2.1-alpha0
-module load openmpi/4.0.7
 
+module load modules/2.1-alpha2  
+module load openmpi/4.0.7
 module load gromacs/mpi-2022.3
 
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
@@ -71,7 +73,7 @@ cp memb_prod1.log memb_prod1_backup.log
 if [ -f memb_prod1.cpt ]
 then
 #gmx mdrun -v -cpi memb_prod1.cpt -ntmpi $SLURM_GPUS_PER_NODE -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
-mpirun --map-by socket:pe=$OMP_NUM_THREADS gmx_mpi mdrun -v -maxh $h_time -noconfout -deffnm memb_prod1 -cpi memb_prod1.cpt &
+mpirun --map-by socket:pe=$OMP_NUM_THREADS gmx_mpi mdrun -v -maxh $h_time  -deffnm memb_prod1 -cpi memb_prod1.cpt &
 md_proc=$!
 else 
 #gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb6.gro   -p topol.top  -n index.ndx
@@ -115,8 +117,16 @@ total_h=$(( $used_d * 24 + $used_h))
 alias nbatch="sbatch -J $( echo "$(echo $SLURM_SUBMIT_DIR | awk -F/ '{print $(NF-2)$(NF-1)$NF}' | sed "s^_^^g" | sed "s^memb^^g" | sed "s^plumed^^g" | sed "s^CFTR^^g" | sed "s^simreadysystems^^")$(echo $1 | sed "s^\.pbs^^g" | sed "s^_^^g" | sed "s^memb^^g"  |sed "s^glob^^g" | sed "s^window^^g" )" | tail -c 11 ) "
 
 
+nbatch () {
+    sbatch -J $( echo "$(pwd | awk -F/ '{print $(NF-2)$(NF-1)$NF}' | sed "s^_^^g" | sed "s^memb^^g" | sed "s^plumed^^g" | sed "s^CFTR^^g" | sed "s^simreadysystems^^")$(echo $1 | sed "s^\.pbs^^g"  | sed "s^\.slurm^^g" | sed "s^_^^g" | sed "s^memb^^g"  | sed "s^glob^^g" | sed "s^window^^g" )" | tail -c 9 ) $1
+}
+
+
 if [  $total_h -gt 0 ] ; 
 then 
+echo 'hi'
 nbatch memb1.slurm
+else
+nbatch process_traj.slurm
 fi
 exit 

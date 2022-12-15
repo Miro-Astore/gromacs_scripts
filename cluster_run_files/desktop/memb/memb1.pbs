@@ -1,0 +1,9 @@
+if [ -f memb_prod1.cpt ]
+then
+gmx mdrun -v -cpi memb_prod1.cpt -ntomp  -deffnm memb_prod1 
+else 
+gmx grompp -f memb_prod.mdp -o memb_prod1.tpr -c memb16.gro   -p topol.top 
+gmx mdrun -v  -deffnm memb_prod1 &
+
+fi 
+
