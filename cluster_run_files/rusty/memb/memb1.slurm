@@ -1,26 +1,16 @@
 #!/bin/bash
 #SBATCH -D ./
 #SBATCH -J prod
-#SBATCH -o out.out
-#SBATCH -e err.out
-<<<<<<< HEAD
+#SBATCH -o out/prod-%j.out
+#SBATCH -e out/prod-%j.err
 #SBATCH --partition=ccb
 ##SBATCH --partition=preempt
 ##SBATCH --qos=preempt
-=======
-##SBATCH --partition=ccb
-#SBATCH --partition=preempt
-#SBATCH --qos=preempt
->>>>>>> 0993abce4d5e0031cedecf81e0809caec7dadb1f
 #SBATCH --requeue
 #SBATCH --constraint=rome,ib
 # Set the number of tasks per node (=MPI ranks)
 #SBATCH --ntasks-per-node=30
-<<<<<<< HEAD
-#SBATCH --time 4-0:00:00
-=======
 #SBATCH --time 12:00:00
->>>>>>> 0993abce4d5e0031cedecf81e0809caec7dadb1f
 # Request 10 node(s)
 #SBATCH --nodes=10
 # Set the number of threads per rank (=OpenMP threads)
@@ -43,11 +33,13 @@ cp err.out err.old
 module purge
 module load cuda
 
-module load modules/2.1-alpha2  
+module load modules/2.1-20230222  
 module load openmpi/4.0.7
-module load gromacs/mpi-2022.3
+
+module load gromacs/mpi-2022.4
 
 export job_root_name="memb_prod1"
+
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
 #!/bin/bash
@@ -79,17 +71,12 @@ sleep_time=$( echo "$sleep_time * 0.95" |  bc -l )
 h_time=$( echo "$sleep_time / 3600" | bc -l )
 
 #just doing this so we can see benchmarks over time and keep track of things.
-cp $job_root_name.log $job_root_name_backup.log
+cp $job_root_name.log $job_root_name\_backup.log
 
 if [ -f $job_root_name.cpt ]
 then
-<<<<<<< HEAD
 #gmx mdrun -v -cpi $job_root_name.cpt -ntmpi $SLURM_GPUS_PER_NODE -ntomp $OMP_NUM_THREADS -deffnm $job_root_name -maxh $h_time &
 mpirun --map-by socket:pe=$OMP_NUM_THREADS gmx_mpi mdrun -v -maxh $h_time  -deffnm $job_root_name -cpi $job_root_name.cpt &
-=======
-#gmx mdrun -v -cpi memb_prod1.cpt -ntmpi $SLURM_GPUS_PER_NODE -ntomp $OMP_NUM_THREADS -deffnm memb_prod1 -maxh $h_time &
-mpirun --map-by socket:pe=$OMP_NUM_THREADS gmx_mpi mdrun -v -maxh $h_time  -deffnm memb_prod1 -cpi memb_prod1.cpt &
->>>>>>> 0993abce4d5e0031cedecf81e0809caec7dadb1f
 md_proc=$!
 else 
 #gmx grompp -f memb_prod.mdp -o $job_root_name.tpr -c memb6.gro   -p topol.top  -n index.ndx
@@ -143,12 +130,8 @@ if [  $total_h -gt 0 ] ;
 then 
 echo 'hi'
 nbatch memb1.slurm
-<<<<<<< HEAD
 elif [ -f $job_root_name.gro ] ;
 then
-=======
-else
->>>>>>> 0993abce4d5e0031cedecf81e0809caec7dadb1f
 nbatch process_traj.slurm
 fi
 exit 
