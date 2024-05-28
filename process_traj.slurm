@@ -9,7 +9,11 @@
 
 
 
-echo -e "1\n0" | gmx trjconv -f glob_prod1.xtc -s glob0.tpr -pbc whole -center yes  -o glob_temp.xtc -dt 1000
+
+load modules/2.0-20220630
+module load gromacs/singlegpunode-2022
+
+ -e "1\n0" | gmx trjconv -f glob_prod1.xtc -s glob0.tpr -pbc whole -center yes  -o glob_temp.xtc 
 rm glob_temp.xtc
 echo -e "1\n1\n1" | gmx trjconv -f glob_prod1.xtc -s glob0.tpr -pbc cluster -center yes  -o sum.xtc
 
